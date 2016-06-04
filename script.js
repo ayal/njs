@@ -7,6 +7,8 @@ var _ = require('lodash');
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
 
+var gval = (v) => (v === '' || v ? v : 0);
+
 var App = React.createClass({
     contextTypes: {
 	router: React.PropTypes.object.isRequired
@@ -28,11 +30,11 @@ var App = React.createClass({
 	    if (!_.isEqual(this.props.location.query,nps.location.query)) {    
 		var q = nps.location.query;
 
-		var logop = q.logop || ns.logop;
-		var yes = q.yes || ns.yes;
-		var not = q.not || ns.not;
-		var seat = q.seat || ns.seat;
-		var top = q.top || ns.top;
+		var logop = gval(q.logop) || ns.logop;
+		var yes = gval(q.yes) || ns.yes;
+		var not = gval(q.not) || ns.not;
+		var seat = gval(q.seat) || ns.seat;
+		var top = gval(q.top) || ns.top;
 		
 		this.setState({logop,top,seat,yes,not});
 	    }
