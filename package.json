@@ -1,0 +1,18 @@
+{
+  "name": "krol",
+  "version": "0.0.1",
+  "description": "krol the things",
+  "main": "app.js",
+  "author": "ayal",
+  "dependencies": {
+    "cheerio": "latest",
+    "express": "latest",
+    "pg": "^4.4.3",
+    "react": "^15.0.1",
+    "react-addons-pure-render-mixin": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "react-router": "^2.3.0",
+    "request": "latest",
+    "webpack": "^1.13.1"
+  }
+}

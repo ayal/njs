@@ -1,0 +1,158 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+* {
+  margin: 0;
+}
+html {
+    overflow-x:hidden;
+    
+}
+html,
+body,
+#content {
+    margin:0;
+    height: 100%;
+
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color:#555;
+    background:#ddd;
+    overflow-x:hidden;
+    overflow: auto;
+    
+    
+}
+
+a {
+    color:inherit;
+    cursor:pointer;
+    
+}
+
+.nav-trigger {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+
+label[for="nav-trigger"] {
+    position:absolute;
+    z-index:2;
+    display:block;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+    
+    background-size: contain;
+    margin:10px;
+
+}
+
+.nav-trigger:checked + label {
+    left: 215px;
+}
+
+.nav-trigger:checked ~ .frames {
+    left: 200px;
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+}
+
+
+.app {
+    height:100%;
+    .filters {
+	min-height:100%;
+	padding:30px;
+	background:#444;
+	color:#ddd;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 0;
+	.filter {
+	    div {
+		margin-bottom:6px;
+	    }
+	    input {
+		background:inherit;
+		border:none;
+		outline:none;
+		border-bottom:1px solid #ddd;
+		color:#ddd;
+		font-size:14px;
+		line-height:14px;
+	    }
+	    padding:10px;
+	    
+	}
+	.logop {
+	    color:pink;
+	    cursor:pointer;
+	}
+    }
+    .frames {
+	min-height:100%;
+	position: relative;
+	top: 0;
+	bottom: 100%;
+	left: 0;
+	z-index: 1;
+
+	background:#ddd;
+	flex-direction:column;
+
+	padding:50px;
+	
+	.list {
+
+	    overflow:auto;
+	    display:flex;
+	    flex-wrap: wrap;
+
+	    .frame {
+		cursor:pointer;
+		position:relative;
+		max-width:150px;
+		max-height:150px;
+		min-height:150px;
+		min-width:150px;
+		
+			       
+		
+		padding:10px;
+		border:2px solid white;
+		margin:4px;
+		.content {
+		    width:100%;
+
+		    overflow:hidden;
+
+		    img {
+			width:200px;
+		    }
+		    
+		}
+		a {
+		    position:absolute;
+		    bottom:10px;
+		    left:10px;
+		    color:#6bd16b;
+		}
+
+		.money {
+		    position:absolute;
+		    bottom:10px;
+		    right:10px;
+		    font-size:20px;
+		    color:#6bd16b;
+		}
+		flex:1;
+	    }
+	}
+    }
+}
