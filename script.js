@@ -54,7 +54,7 @@ var App = React.createClass({
 
 	var q = this.props.location.query;
 	q[name] = val;
-	that.context.router.push({pathname: 'njs',query:q});
+	that.context.router.push({pathname: '/njs/',query:q});
 	
 	try {
 	    var x = new RegExp(val,'gim');
@@ -106,7 +106,7 @@ var App = React.createClass({
 	    q['logop'] = 'AND';
 	}
 	
-	that.context.router.push({pathname: 'njs',query:q});
+	that.context.router.push({pathname: '/njs/',query:q});
 
     },
     render: function() {
@@ -216,11 +216,11 @@ var App = React.createClass({
 	    <div className="filter">
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'OR', yes: 'no dent', not: 'dent'} }))} >No Dent</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'OR', yes: 'no dent', not: 'dent'} }))} >No Dent</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'AND', yes: 'agressive'} }))} >Agressive</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND', yes: 'agressive'} }))} >Agressive</a>
 	    </div>
 
 	    
