@@ -23,15 +23,18 @@ var App = React.createClass({
     },
     componentWillUpdate: function(nps, ns) {
 	console.log('will update, nps, ns')
-	var q = this.props.location.query;
 
-	var logop = q.logop || ns.logop;
-	var yes = q.yes || ns.yes;
-	var not = q.not || ns.not;
-	var seat = q.seat || ns.seat;
-	var top = q.top || ns.top;
-	
-        this.setState({logop,top,seat,yes,not});
+	    if (!_.equals(this.props.location.query,nps.location.query)) {    
+		var q = nps.location.query;
+
+		var logop = q.logop || ns.logop;
+		var yes = q.yes || ns.yes;
+		var not = q.not || ns.not;
+		var seat = q.seat || ns.seat;
+		var top = q.top || ns.top;
+		
+		this.setState({logop,top,seat,yes,not});
+	    }
 	
     },
     componentDidMount: function(){
