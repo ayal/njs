@@ -230,7 +230,7 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',yes:'',not:'',top:'', seat: 'seat 53-55'} }))} >5[3-5]</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',yes:'',not:'',top:'', seat: '5[3-5]'} }))} >seat 53-55</a>
 	    </div>
 
 	    </div>
