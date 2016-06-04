@@ -2,6 +2,7 @@
 require("./style.less");
 import React from 'react'
 import { render } from 'react-dom'
+var _ = require('lodash');
 
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
