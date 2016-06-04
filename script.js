@@ -21,16 +21,17 @@ var App = React.createClass({
 	
         return {frames:[],regex:'',logop,top,seat,yes,not};
     },
-    componentWillUpdate: function() {
+    componentWillUpdate: function(nps, ns) {
 	var q = this.props.location.query;
 
-	var logop = q.logop || this.state.logop;
-	var yes = q.yes || this.state.yes;
-	var not = q.not || this.state.not;
-	var seat = q.seat || this.state.seat;
-	var top = q.top || this.state.top;
+	var logop = q.logop || ns.logop;
+	var yes = q.yes || ns.yes;
+	var not = q.not || ns.not;
+	var seat = q.seat || ns.seat;
+	var top = q.top || ns.top;
 	
         this.setState({logop,top,seat,yes,not});
+	
     },
     componentDidMount: function(){
         var that = this;
