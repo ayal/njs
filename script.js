@@ -21,6 +21,17 @@ var App = React.createClass({
 	
         return {frames:[],regex:'',logop,top,seat,yes,not};
     },
+    componentWillUpdate: function() {
+	var q = this.props.location.query;
+
+	var logop = q.logop || this.state.logop;
+	var yes = q.yes || this.state.yes;
+	var not = q.not || this.state.not;
+	var seat = q.seat || this.state.seat;
+	var top = q.top || this.state.top;
+	
+        this.setState({logop,top,seat,yes,not});
+    },
     componentDidMount: function(){
         var that = this;
 	fetch('/njs/frames.json').then(function(r){
