@@ -4,6 +4,8 @@ import React from 'react'
 import { render } from 'react-dom'
 var _ = require('lodash');
 
+import 'whatwg-fetch';
+
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
 
