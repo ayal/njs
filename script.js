@@ -25,7 +25,7 @@ var App = React.createClass({
     componentWillUpdate: function(nps, ns) {
 	console.log('will update, nps, ns')
 
-	    if (!_.equals(this.props.location.query,nps.location.query)) {    
+	    if (!_.isEqual(this.props.location.query,nps.location.query)) {    
 		var q = nps.location.query;
 
 		var logop = q.logop || ns.logop;
