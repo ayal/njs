@@ -93,8 +93,6 @@ var App = React.createClass({
 
     },
     render: function() {
-	console.log(this.props, this.context);
-	
 	var that = this;
 	var sframes = this.state.frames;
 	var frames = sframes.map((f)=>{
@@ -199,9 +197,16 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="filter">
-	    <a href="/njs/?logop=OR&yes=no+dent&no=dent">No Dent</a>
-	    <a href="/njs/?logop=AND&yes=sloping">Sloping</a>
-	    <a href="/njs/?logop=AND&yes=mint">Mint</a>
+
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'OR', yes: 'no dent', not: 'dent'} });)} >No Dent</a>
+	    </div>
+
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'AND', yes: 'agressive'} });)} >Agressive</a>
+	    </div>
+
+	    
 	    </div>
 	    
 
