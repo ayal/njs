@@ -13,7 +13,7 @@ var App = React.createClass({
     getInitialState: function() {
 	var q = this.props.location.query;
 
-	var logop = q.logop || 'AND';
+	var logop = q.logop || 'OR';
 	var yes = q.yes || '';
 	var not = q.not || '';
 	var seat = q.seat || '';
@@ -23,7 +23,7 @@ var App = React.createClass({
     },
     componentDidMount: function(){
         var that = this;
-	fetch('/frames.json').then(function(r){
+	fetch('/njs/frames.json').then(function(r){
 	    r.json().then(function(x){
 		x = x.sort((a,b)=>(parseInt(a.money.replace(/[$,]/gim,'')) - parseInt(b.money.replace(/[$,]/gim,''))));
 		that.setState({frames:x})
@@ -197,6 +197,13 @@ var App = React.createClass({
 	    </div>
 	    <input value={this.state.top} onChange={this.changeTop} />
 	    </div>
+
+	    <div className="filter">
+	    <a href="/njs/?logop=OR&yes=no+dent&no=dent">No Dent</a>
+	    <a href="/njs/?logop=AND&yes=sloping">Sloping</a>
+	    <a href="/njs/?logop=AND&yes=mint">Mint</a>
+	    </div>
+	    
 
 	    
 	    </div>
