@@ -92,7 +92,7 @@
 				},
 				componentDidMount: function componentDidMount() {
 							var that = this;
-							fetch('/frames.json').then(function (r) {
+							fetch('/njs/frames.json').then(function (r) {
 										r.json().then(function (x) {
 													x = x.sort(function (a, b) {
 																return parseInt(a.money.replace(/[$,]/gim, '')) - parseInt(b.money.replace(/[$,]/gim, ''));
