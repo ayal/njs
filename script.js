@@ -199,11 +199,11 @@ var App = React.createClass({
 	    <div className="filter">
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'OR', yes: 'no dent', not: 'dent'} });)} >No Dent</a>
+	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'OR', yes: 'no dent', not: 'dent'} }))} >No Dent</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'AND', yes: 'agressive'} });)} >Agressive</a>
+	    <a onClick={()=>(that.context.router.push({pathname: 'njs',query:{logop:'AND', yes: 'agressive'} }))} >Agressive</a>
 	    </div>
 
 	    
