@@ -219,11 +219,16 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 render((
     <Router history={browserHistory}>
+
     <Route path="/" component={App}>
     </Route>
+    
     <Route path="/njs/" component={App}>
+    </Route>
+    
     <Route path="/njs" component={App}>
     </Route>
+    
     </Router>), document.getElementById('content'));
 
 
