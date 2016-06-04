@@ -44,6 +44,7 @@ var App = React.createClass({
     },
     componentDidMount: function(){
         var that = this;
+	
 	fetch('/njs/frames.json').then(function(r){
 	    r.json().then(function(x){
 		x = x.sort((a,b)=>(parseInt(a.money.replace(/[$,]/gim,'')) - parseInt(b.money.replace(/[$,]/gim,''))));
