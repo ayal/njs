@@ -14,7 +14,7 @@ var App = React.createClass({
     getInitialState: function() {
 	var q = this.props.location.query;
 
-	var logop = q.logop || 'OR';
+	var logop = q.logop || 'AND';
 	var yes = q.yes || '';
 	var not = q.not || '';
 	var seat = q.seat || '';
@@ -220,15 +220,15 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{seat:'',not:'',top:'', yes: 'aggressive'} }))} >Aggressive</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',seat:'',not:'',top:'', yes: 'aggressive'} }))} >Aggressive</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{seat:'',not:'',top:'',yes: 'funny'} }))} >Funny</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',seat:'',not:'',top:'',yes: 'funny'} }))} >Funny</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{yes:'',not:'',top:'', seat: 'seat 53-55'} }))} >5[3-5]</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',yes:'',not:'',top:'', seat: 'seat 53-55'} }))} >5[3-5]</a>
 	    </div>
 
 	    </div>
