@@ -220,10 +220,25 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND', yes: 'agressive'} }))} >Agressive</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{yes: 'aggressive'} }))} >Aggressive</a>
 	    </div>
 
-	    
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{yes: 'mint'} }))} >Mint</a>
+	    </div>
+
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{yes: 'pink'} }))} >Pink</a>
+	    </div>
+
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{yes: 'funny'} }))} >Funny</a>
+	    </div>
+
+	    <div className="preset">
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{seat: 'seat 53-55'} }))} >5[3-5]</a>
+	    </div>
+
 	    </div>
 	    
 
