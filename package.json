@@ -13,7 +13,7 @@
     "react-dom": "^15.0.1",
     "react-router": "^2.3.0",
     "request": "latest",
-    "webpack": "^1.13.1",
+    "webpack": "v2.1.0-beta.7",
     "whatwg-fetch": "^1.0.0"
   }
 }
