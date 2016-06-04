@@ -7,7 +7,7 @@ var _ = require('lodash');
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
 
-var gval = (v) => (v === '' || v ? v : 0);
+var gval = (v,d) => (v === '' || v ? v : d);
 
 var App = React.createClass({
     contextTypes: {
@@ -30,11 +30,11 @@ var App = React.createClass({
 	    if (!_.isEqual(this.props.location.query,nps.location.query)) {    
 		var q = nps.location.query;
 
-		var logop = gval(q.logop) || ns.logop;
-		var yes = gval(q.yes) || ns.yes;
-		var not = gval(q.not) || ns.not;
-		var seat = gval(q.seat) || ns.seat;
-		var top = gval(q.top) || ns.top;
+		var logop = gval(q.logop, ns.logop);
+		var yes = gval(q.yes, ns.yes);
+		var not = gval(q.not, ns.not);
+		var seat = gval(q.seat, ns.seat);
+		var top = gval(q.top, ns.top);
 		
 		this.setState({logop,top,seat,yes,not});
 	    }
