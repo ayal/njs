@@ -48,8 +48,6 @@ var App = React.createClass({
         return {frames:[],regex:'',logop,top,seat,yes,not};
     },
     componentWillUpdate: function(nps, ns) {
-	console.log('will update, nps, ns')
-
 	    if (!_.isEqual(this.props.location.query,nps.location.query)) {    
 		var q = nps.location.query;
 
