@@ -27,7 +27,7 @@ window.loadvisi = _.debounce(function() {
 
 	}
     })
-},100)
+},10)
 
 
     

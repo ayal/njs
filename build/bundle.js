@@ -13626,7 +13626,7 @@
 										}
 							} else {}
 				});
-	}, 100);
+	}, 10);
 
 	var App = _react2.default.createClass({
 				displayName: 'App',
