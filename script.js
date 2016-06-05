@@ -11,6 +11,27 @@ import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router'
 
 var gval = (v,d) => (v === '' || v ? v : d);
 
+window.loadvisi = _.debounce(function() {
+    $('.fimg').each(function(i,x){
+	x = $(x);
+	var os = x.offset();
+
+	if (os && os.top > -300 && os.top < $(window).height() + 300) {
+	    if (!x.attr('src')) {
+		x.css({opacity:0}).load(function(){
+		    x.animate({opacity:1});
+		}).attr('src', x.attr('data-fsrc'));
+	    }
+	}
+	else {
+
+	}
+    })
+},1000)
+
+
+    
+
 var App = React.createClass({
     contextTypes: {
 	router: React.PropTypes.object.isRequired
@@ -43,9 +64,13 @@ var App = React.createClass({
 	
     },
     componentDidMount: function(){
+	$('.app').on('scroll', function(){
+	    loadvisi();    
+	});
+
         var that = this;
 	
-	fetch('/njs/frames.json').then(function(r){
+	fetch('frames.json').then(function(r){
 	    r.json().then(function(x){
 		x = x.sort((a,b)=>(parseInt(a.money.replace(/[$,]/gim,'')) - parseInt(b.money.replace(/[$,]/gim,''))));
 		that.setState({frames:x})
@@ -115,6 +140,9 @@ var App = React.createClass({
 
     },
     render: function() {
+	setTimeout(function(){
+	    loadvisi();
+	},1000)
 	var that = this;
 	var sframes = this.state.frames;
 	var frames = sframes.map((f)=>{
@@ -162,15 +190,17 @@ var App = React.createClass({
 			)
 		    }
 		    else {
+			
 			return (
 			    <div className="frame" key={f.url} onClick={that.clickFrame(f)}>
 			    
 			    <div className="content">
 			    <div>{f.title}</div>
+			    <img data-fsrc={f.img} className="fimg" />
 			    </div>
-
-			    	<a href={f.url} target="_blank">link</a>
-				<div className="money">{f.money}</div>
+			    
+			    <a href={f.url} target="_blank">link</a>
+			    <div className="money">{f.money}</div>
 			    </div>
 			);
 		    }
