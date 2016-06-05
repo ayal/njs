@@ -152,10 +152,11 @@ var App = React.createClass({
 			return (
 			    <div className="frame" key={f.url} onClick={that.unclickFrame(f)} >
 			    <div className="content">
+			    <div>{f.title}</div>
 			    <img src={that.state.selected && that.state.selected.img} />
-				</div>
+			    </div>
 				
-				<a href={f.url} target="_blank">link</a>
+			    <a href={f.url} target="_blank">link</a>
 			    <div className="money">{f.money}</div>
 			    </div>
 			)
