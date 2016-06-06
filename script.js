@@ -108,14 +108,14 @@ var App = React.createClass({
     clickFrame: function(f) {
 	var that = this;
 	return () => {
-	    that.setState({selected:f});
+//	    that.setState({selected:f});
 	    console.log(f);
 	}
     },
     unclickFrame: function(f) {
 	var that = this;
 	return () => {
-	    that.setState({selected:null});
+//	    that.setState({selected:null});
 	    console.log(f);
 	}
     },
