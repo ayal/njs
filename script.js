@@ -109,7 +109,7 @@ var App = React.createClass({
 	var that = this;
 	return () => {
 	    //	    that.setState({selected:f});
-	    window.open(f.url);
+	    // window.open(f.url);
 	    console.log(f);
 	}
     },

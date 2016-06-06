@@ -13706,7 +13706,7 @@
 							var that = this;
 							return function () {
 										//	    that.setState({selected:f});
-										window.open(f.url);
+										// window.open(f.url);
 										console.log(f);
 							};
 				},
