@@ -13705,14 +13705,15 @@
 				clickFrame: function clickFrame(f) {
 							var that = this;
 							return function () {
-										that.setState({ selected: f });
+										//	    that.setState({selected:f});
+										window.open(f.url);
 										console.log(f);
 							};
 				},
 				unclickFrame: function unclickFrame(f) {
 							var that = this;
 							return function () {
-										that.setState({ selected: null });
+										//	    that.setState({selected:null});
 										console.log(f);
 							};
 				},
@@ -13923,7 +13924,7 @@
 																			_react2.default.createElement(
 																						'a',
 																						{ onClick: function onClick() {
-																												return that.context.router.push({ pathname: '/njs/', query: { logop: 'AND', yes: '', not: '', top: '', seat: '5[3-5]' } });
+																												return that.context.router.push({ pathname: '/njs/', query: { seat: '5[3-5]' } });
 																									} },
 																						'seat 53-55'
 																			)

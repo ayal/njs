@@ -108,7 +108,8 @@ var App = React.createClass({
     clickFrame: function(f) {
 	var that = this;
 	return () => {
-//	    that.setState({selected:f});
+	    //	    that.setState({selected:f});
+	    window.open(f.url);
 	    console.log(f);
 	}
     },
@@ -262,7 +263,7 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{logop:'AND',yes:'',not:'',top:'', seat: '5[3-5]'} }))} >seat 53-55</a>
+	    <a onClick={()=>(that.context.router.push({pathname: '/njs/',query:{seat: '5[3-5]'} }))} >seat 53-55</a>
 	    </div>
 
 	    </div>
