@@ -27,13 +27,98 @@ app.use('/fonts', express.static('fonts'));
 
 app.use('/js', express.static('js'));
 
-var timeout = 5000;
+var timeout = 30000;
 
 var allframes = [];
 
 var writeframes = _.debounce(function(){
     fs.writeFile("frames.json", JSON.stringify(allframes))
 },500);
+
+
+
+ebayframe_krol = function(url, cb) {
+    console.log('e')
+    request({url:url,timeout:timeout}, function(error, response, html){
+	var itemid = url.split('/')[5].split('?')[0];
+	request({url:'http://vi.vipr.ebaydesc.com/ws/eBayISAPI.dll?ViewItemDescV4&item=' + itemid ,timeout:timeout}, function(error1, response1, html1){
+	    if (error1) {
+		console.log('error getting desc', error1);
+		return;
+	    }
+            if(!error) {
+		var data = {};
+		var $ = cheerio.load(html);
+		
+		var $1 = cheerio.load(html1);
+		
+		var frames = [];
+		var text = $1('#mid_content').text()
+		var money = $('#prcIsum').text().replace('US ','');
+		var img = $1('#hw_images').find('img').attr('src');
+		var title = $('h1#itemTitle').text();
+		
+		
+		allframes.push({type:'njs', money: money, text:text, img: img, url:url, title});
+		writeframes();
+		
+		cb(text,money);
+            }
+            else {
+		console.log('**** Error', url, error);
+		cb('','')
+            }
+	});
+    });
+}
+
+ebay_krol = function(term, page, cb) {
+    var url = 'http://stores.ebay.ph/8pilgrim8/Track-Bike-Frame-/_i.html?rt=nc&_fsub=1456842013&_sid=953818053&_trksid=p4634.c0.m14.l1581&_pgn=' + page;
+    request({url:url,timeout:timeout}, function(error, response, html){
+        if(!error) {
+            var data = {};
+
+	    var $ = cheerio.load(html);
+            var frames = [];
+	    
+            $('.gallery').each(
+                function(i,frame){
+		    var link = $(frame).find('.gpvi').attr('href');
+		    frames.push(link)
+		}
+            );
+
+	    var doit = function(cursor, frames) {
+		var link = frames[cursor];
+		if (!link) {
+		    return;
+		}
+		ebayframe_krol(link, function(t,m){
+		    if (t.match(term)) {
+			console.log('*******************')
+			console.log(link, m)
+			console.log('*******************')
+		    }
+		    doit(cursor + 1, frames);
+		})
+	    };
+
+	    doit(0, frames);
+	    console.log('ebay_results', frames.length);
+            cb(frames);
+        }
+        else {
+            console.log(error, page);
+        }
+    });
+}
+
+
+for (var p = 1; p < 4; p++) {
+    ebay_krol(/.seat.tube..C.T..5[3-5]([^]*?)no\sdent/gim,p,function(r){
+	//    console.log('res', r)
+    })
+}
 
 frame_krol = function(url, cb) {
     console.log('.')
@@ -63,7 +148,7 @@ njs_krol = function(term, page, cb) {
     request({url:url,timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
-            console.time('njs_find');
+
 	    var $ = cheerio.load(html);
             var frames = [];
             $('.product-grid-item').each(
@@ -90,7 +175,6 @@ njs_krol = function(term, page, cb) {
 
 	    doit(0, frames);
 	    
-	    console.timeEnd('njs_find');
 	    console.log('njs_results', frames.length);
             cb(frames);
         }
