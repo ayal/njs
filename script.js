@@ -138,10 +138,10 @@ var App = React.createClass({
 	that.context.router.push({pathname: '/njs/',query:q});
 
     },
-    nav: function(p, q) {
+    nav: function({pathname,query}) {
 	var that = this;
-	var newq = _.extend(this.props.location.query, q);
-	that.context.router.push({pathname: p, query:newq})
+	var newq = _.extend(this.props.location.query, query);
+	that.context.router.push({pathname: pathname, query:newq})
     },
     render: function() {
 	setTimeout(function(){
