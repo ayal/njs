@@ -165,14 +165,14 @@ var App = React.createClass({
 
 		var seat = !this.state['seat-err'];
 		if (seat && this.state.seat) {
-		    var srgx1 = new RegExp('seat tube..*' + this.state.seat,'gim');
+		    var srgx1 = new RegExp('seat tube..?' + this.state.seat,'gim');
 		    var srgx2 = new RegExp('seat.tube..C.T..' + this.state.seat,'gim');
 		    seat = f.text.match(srgx1) || f.text.match(srgx2);
 		}
 
 		var top = !this.state['top-err'];
 		if (top && this.state.top) {
-		    var trgx1 = new RegExp('top tube..*' + this.state.top,'gim');
+		    var trgx1 = new RegExp('top tube..?' + this.state.top,'gim');
 		    var trgx2 = new RegExp('top tube.......' + this.state.top,'gim');
 		    top = f.text.match(trgx1) || f.text.match(trgx2);
 		}

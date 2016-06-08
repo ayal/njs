@@ -13733,10 +13733,13 @@
 
 							that.context.router.push({ pathname: '/njs/', query: q });
 				},
-				nav: function nav(p, q) {
+				nav: function nav(_ref) {
+							var pathname = _ref.pathname;
+							var query = _ref.query;
+
 							var that = this;
-							var newq = _.extend(this.props.location.query, q);
-							that.context.router.push({ pathname: p, query: newq });
+							var newq = _.extend(this.props.location.query, query);
+							that.context.router.push({ pathname: pathname, query: newq });
 				},
 				render: function render() {
 							var _this = this;
@@ -13762,14 +13765,14 @@
 
 													var seat = !_this.state['seat-err'];
 													if (seat && _this.state.seat) {
-																var srgx1 = new RegExp('seat tube..*' + _this.state.seat, 'gim');
+																var srgx1 = new RegExp('seat tube..?' + _this.state.seat, 'gim');
 																var srgx2 = new RegExp('seat.tube..C.T..' + _this.state.seat, 'gim');
 																seat = f.text.match(srgx1) || f.text.match(srgx2);
 													}
 
 													var top = !_this.state['top-err'];
 													if (top && _this.state.top) {
-																var trgx1 = new RegExp('top tube..*' + _this.state.top, 'gim');
+																var trgx1 = new RegExp('top tube..?' + _this.state.top, 'gim');
 																var trgx2 = new RegExp('top tube.......' + _this.state.top, 'gim');
 																top = f.text.match(trgx1) || f.text.match(trgx2);
 													}
