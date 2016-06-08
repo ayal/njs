@@ -48,7 +48,7 @@ var App = React.createClass({
         return {frames:[],regex:'',logop,top,seat,yes,not};
     },
     componentWillUpdate: function(nps, ns) {
-	    if (!_.isEqual(this.props.location.query,nps.location.query)) {    
+	if (!_.isEqual(this.props.location.query,nps.location.query)) {    
 		var q = nps.location.query;
 
 		var logop = gval(q.logop, ns.logop);
@@ -140,7 +140,8 @@ var App = React.createClass({
     },
     nav: function({pathname,query}) {
 	var that = this;
-	var newq = _.extend(this.props.location.query, query);
+	var cquery _.clone(this.props.location.query);
+	var newq = _.extend(cquery, query);
 	that.context.router.push({pathname: pathname, query:newq})
     },
     render: function() {
