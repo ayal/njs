@@ -13757,7 +13757,7 @@
 
 													var seat = !_this.state['seat-err'];
 													if (seat && _this.state.seat) {
-																var srgx1 = new RegExp('seat tube.' + _this.state.seat, 'gim');
+																var srgx1 = new RegExp('seat tube..*' + _this.state.seat, 'gim');
 																var srgx2 = new RegExp('seat.tube..C.T..' + _this.state.seat, 'gim');
 																seat = f.text.match(srgx1) || f.text.match(srgx2);
 													}
