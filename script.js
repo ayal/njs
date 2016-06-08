@@ -140,7 +140,7 @@ var App = React.createClass({
     },
     nav: function(p, q) {
 	var newq = _.extend(this.props.location.query, q);
-	that.context.router.push({pathname: p, query:newq}))
+	that.context.router.push({pathname: p, query:newq})
     },
     render: function() {
 	setTimeout(function(){
