@@ -13764,7 +13764,7 @@
 
 													var top = !_this.state['top-err'];
 													if (top && _this.state.top) {
-																var trgx1 = new RegExp('top tube.' + _this.state.top, 'gim');
+																var trgx1 = new RegExp('top tube..*' + _this.state.top, 'gim');
 																var trgx2 = new RegExp('top tube.......' + _this.state.top, 'gim');
 																top = f.text.match(trgx1) || f.text.match(trgx2);
 													}

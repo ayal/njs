@@ -167,7 +167,7 @@ var App = React.createClass({
 
 		var top = !this.state['top-err'];
 		if (top && this.state.top) {
-		    var trgx1 = new RegExp('top tube.' + this.state.top,'gim');
+		    var trgx1 = new RegExp('top tube..*' + this.state.top,'gim');
 		    var trgx2 = new RegExp('top tube.......' + this.state.top,'gim');
 		    top = f.text.match(trgx1) || f.text.match(trgx2);
 		}
