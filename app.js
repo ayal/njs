@@ -73,7 +73,7 @@ ebayframe_krol = function(url, cb) {
 }
 
 ebay_krol = function(term, page, cb) {
-    var url = 'http://stores.ebay.ph/8pilgrim8/Track-Bike-Frame-/_i.html?rt=nc&_fsub=1456842013&_sid=953818053&_trksid=p4634.c0.m14.l1581&_pgn=' + page;
+    var url = 'http://stores.ebay.com/8pilgrim8/Track-Bike-Frame-/_i.html?rt=nc&_fsub=1456842013&_sid=953818053&_trksid=p4634.c0.m14.l1581&_pgn=' + page;
     request({url:url,timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
