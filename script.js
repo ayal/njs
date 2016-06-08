@@ -140,7 +140,7 @@ var App = React.createClass({
     },
     nav: function({pathname,query}) {
 	var that = this;
-	var cquery _.clone(this.props.location.query);
+	var cquery = _.clone(this.props.location.query);
 	var newq = _.extend(cquery, query);
 	that.context.router.push({pathname: pathname, query:newq})
     },
