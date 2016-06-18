@@ -295,6 +295,10 @@ var App = React.createClass({
 		<a onClick={()=>(that.nav({pathname: '/njs/',query:{top: '5[3-5]'} }))} >top 53-55</a>
 		</div>
 
+	    	<div className="preset">
+		<a onClick={()=>(that.nav({pathname: '/njs/',query:{rear: '120'} }))} >rear 120mm</a>
+		</div>
+
 	    </div>
 	    
 

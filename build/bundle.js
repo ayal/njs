@@ -13610,372 +13610,404 @@
 	var _ = __webpack_require__(148);
 
 	var gval = function gval(v, d) {
-				return v === '' || v ? v : d;
+		return v === '' || v ? v : d;
 	};
 
 	window.loadvisi = _.debounce(function () {
-				$('.fimg').each(function (i, x) {
-							x = $(x);
-							var os = x.offset();
+		$('.fimg').each(function (i, x) {
+			x = $(x);
+			var os = x.offset();
 
-							if (os && os.top > -300 && os.top < $(window).height() + 300) {
-										if (!x.attr('src')) {
-													x.css({ opacity: 0 }).load(function () {
-																x.animate({ opacity: 1 });
-													}).attr('src', x.attr('data-fsrc'));
-										}
-							} else {}
-				});
+			if (os && os.top > -300 && os.top < $(window).height() + 300) {
+				if (!x.attr('src')) {
+					x.css({ opacity: 0 }).load(function () {
+						x.animate({ opacity: 1 });
+					}).attr('src', x.attr('data-fsrc'));
+				}
+			} else {}
+		});
 	}, 10);
 
 	var App = _react2.default.createClass({
-				displayName: 'App',
+		displayName: 'App',
 
-				contextTypes: {
-							router: _react2.default.PropTypes.object.isRequired
-				},
-				getInitialState: function getInitialState() {
-							var q = this.props.location.query;
+		contextTypes: {
+			router: _react2.default.PropTypes.object.isRequired
+		},
+		getInitialState: function getInitialState() {
+			var q = this.props.location.query;
 
-							var logop = q.logop || 'AND';
-							var yes = q.yes || '';
-							var not = q.not || '';
-							var seat = q.seat || '';
-							var top = q.top || '';
+			var logop = q.logop || 'AND';
+			var yes = q.yes || '';
+			var not = q.not || '';
+			var seat = q.seat || '';
+			var top = q.top || '';
+			var rear = q.rear || '';
 
-							return { frames: [], regex: '', logop: logop, top: top, seat: seat, yes: yes, not: not };
-				},
-				componentWillUpdate: function componentWillUpdate(nps, ns) {
-							if (!_.isEqual(this.props.location.query, nps.location.query)) {
-										var q = nps.location.query;
+			return { frames: [], regex: '', logop: logop, top: top, seat: seat, yes: yes, not: not, rear: rear };
+		},
+		componentWillUpdate: function componentWillUpdate(nps, ns) {
+			if (!_.isEqual(this.props.location.query, nps.location.query)) {
+				var q = nps.location.query;
 
-										var logop = gval(q.logop, ns.logop);
-										var yes = gval(q.yes, ns.yes);
-										var not = gval(q.not, ns.not);
-										var seat = gval(q.seat, ns.seat);
-										var top = gval(q.top, ns.top);
+				var logop = gval(q.logop, ns.logop);
+				var yes = gval(q.yes, ns.yes);
+				var not = gval(q.not, ns.not);
+				var seat = gval(q.seat, ns.seat);
+				var rear = gval(q.rear, ns.rear);
+				var top = gval(q.top, ns.top);
 
-										this.setState({ logop: logop, top: top, seat: seat, yes: yes, not: not });
-							}
-				},
-				componentDidMount: function componentDidMount() {
-							$('.app').on('scroll', function () {
-										loadvisi();
-							});
+				this.setState({ logop: logop, top: top, seat: seat, yes: yes, not: not, rear: rear });
+			}
+		},
+		componentDidMount: function componentDidMount() {
+			$('.app').on('scroll', function () {
+				loadvisi();
+			});
 
-							var that = this;
+			var that = this;
 
-							fetch('frames.json').then(function (r) {
-										r.json().then(function (x) {
-													x = x.sort(function (a, b) {
-																return parseInt(a.money.replace(/[$,]/gim, '')) - parseInt(b.money.replace(/[$,]/gim, ''));
-													});
-													that.setState({ frames: x });
-										});
-							});
-				},
-				setval: function setval(name, val) {
-							var that = this;
-							var oldval = this.state[name];
-							this.setState(_defineProperty({}, name, val));
+			fetch('frames.json').then(function (r) {
+				r.json().then(function (x) {
+					x = x.sort(function (a, b) {
+						return parseInt(a.money.replace(/[$,]/gim, '')) - parseInt(b.money.replace(/[$,]/gim, ''));
+					});
+					that.setState({ frames: x });
+				});
+			});
+		},
+		setval: function setval(name, val) {
+			var that = this;
+			var oldval = this.state[name];
+			this.setState(_defineProperty({}, name, val));
 
-							var q = this.props.location.query;
-							q[name] = val;
-							that.context.router.push({ pathname: '/njs/', query: q });
+			var q = this.props.location.query;
+			q[name] = val;
+			that.context.router.push({ pathname: '/njs/', query: q });
 
-							try {
-										var x = new RegExp(val, 'gim');
-										this.setState(_defineProperty({}, name + '-err', null));
-							} catch (err) {
-										this.setState(_defineProperty({}, name + '-err', 1));
-							}
-				},
-				changeYes: function changeYes(e) {
-							this.setval('yes', e.target.value);
-				},
-				changeNot: function changeNot(e) {
-							this.setval('not', e.target.value);
-				},
-				changeSeat: function changeSeat(e) {
-							this.setval('seat', e.target.value);
-				},
-				changeTop: function changeTop(e) {
-							this.setval('top', e.target.value);
-				},
-				clickFrame: function clickFrame(f) {
-							var that = this;
-							return function () {
-										//	    that.setState({selected:f});
-										// window.open(f.url);
-										console.log(f);
-							};
-				},
-				unclickFrame: function unclickFrame(f) {
-							var that = this;
-							return function () {
-										//	    that.setState({selected:null});
-										console.log(f);
-							};
-				},
-				logop: function logop() {
-							var that = this;
-							var q = this.props.location.query;
+			try {
+				var x = new RegExp(val, 'gim');
+				this.setState(_defineProperty({}, name + '-err', null));
+			} catch (err) {
+				this.setState(_defineProperty({}, name + '-err', 1));
+			}
+		},
+		changeYes: function changeYes(e) {
+			this.setval('yes', e.target.value);
+		},
+		changeNot: function changeNot(e) {
+			this.setval('not', e.target.value);
+		},
+		changeSeat: function changeSeat(e) {
+			this.setval('seat', e.target.value);
+		},
+		changeRear: function changeRear(e) {
+			this.setval('rear', e.target.value);
+		},
+		changeTop: function changeTop(e) {
+			this.setval('top', e.target.value);
+		},
+		clickFrame: function clickFrame(f) {
+			var that = this;
+			return function () {
+				//	    that.setState({selected:f});
+				// window.open(f.url);
+				console.log(f);
+			};
+		},
+		unclickFrame: function unclickFrame(f) {
+			var that = this;
+			return function () {
+				//	    that.setState({selected:null});
+				console.log(f);
+			};
+		},
+		logop: function logop() {
+			var that = this;
+			var q = this.props.location.query;
 
-							var logop = this.state.logop;
+			var logop = this.state.logop;
 
-							if (logop === 'AND') {
-										this.setState({ logop: 'OR' });
-										q['logop'] = 'OR';
-							} else {
-										this.setState({ logop: 'AND' });
-										q['logop'] = 'AND';
-							}
+			if (logop === 'AND') {
+				this.setState({ logop: 'OR' });
+				q['logop'] = 'OR';
+			} else {
+				this.setState({ logop: 'AND' });
+				q['logop'] = 'AND';
+			}
 
-							that.context.router.push({ pathname: '/njs/', query: q });
-				},
-				nav: function nav(_ref) {
-							var pathname = _ref.pathname;
-							var query = _ref.query;
+			that.context.router.push({ pathname: '/njs/', query: q });
+		},
+		nav: function nav(_ref) {
+			var pathname = _ref.pathname;
+			var query = _ref.query;
 
-							var that = this;
-							var cquery = _.clone(this.props.location.query);
-							var newq = _.extend(cquery, query);
-							that.context.router.push({ pathname: pathname, query: newq });
-				},
-				render: function render() {
-							var _this = this;
+			var that = this;
+			var cquery = _.clone(this.props.location.query);
+			var newq = _.extend(cquery, query);
+			that.context.router.push({ pathname: pathname, query: newq });
+		},
+		render: function render() {
+			var _this = this;
 
-							setTimeout(function () {
-										loadvisi();
-							}, 1000);
-							var that = this;
-							var sframes = this.state.frames;
-							var frames = sframes.map(function (f) {
-										try {
-													var yes = !_this.state['yes-err'];
-													if (yes && _this.state.yes) {
-																var yrgx = new RegExp(_this.state.yes, 'gim');
-																yes = f.text.match(yrgx) || f.title.match(yrgx);
-													}
+			setTimeout(function () {
+				loadvisi();
+			}, 1000);
+			var that = this;
+			var sframes = this.state.frames;
+			var frames = sframes.map(function (f) {
+				try {
+					var yes = !_this.state['yes-err'];
+					if (yes && _this.state.yes) {
+						var yrgx = new RegExp(_this.state.yes, 'gim');
+						yes = f.text.match(yrgx) || f.title.match(yrgx);
+					}
 
-													var not = !_this.state['not-err'];
-													if (not && _this.state.not) {
-																var nrgx = new RegExp(_this.state.not, 'gim');
-																not = !f.text.match(nrgx) && !f.title.match(nrgx);
-													}
+					var not = !_this.state['not-err'];
+					if (not && _this.state.not) {
+						var nrgx = new RegExp(_this.state.not, 'gim');
+						not = !f.text.match(nrgx) && !f.title.match(nrgx);
+					}
 
-													var seat = !_this.state['seat-err'];
-													if (seat && _this.state.seat) {
-																var srgx1 = new RegExp('seat tube..?' + _this.state.seat, 'gim');
-																var srgx2 = new RegExp('seat.tube..C.T..' + _this.state.seat, 'gim');
-																seat = f.text.match(srgx1) || f.text.match(srgx2);
-													}
+					var seat = !_this.state['seat-err'];
+					if (seat && _this.state.seat) {
+						var srgx1 = new RegExp('seat tube..?' + _this.state.seat, 'gim');
+						var srgx2 = new RegExp('seat.tube..C.T..' + _this.state.seat, 'gim');
+						seat = f.text.match(srgx1) || f.text.match(srgx2);
+					}
 
-													var top = !_this.state['top-err'];
-													if (top && _this.state.top) {
-																var trgx1 = new RegExp('top tube..?' + _this.state.top, 'gim');
-																var trgx2 = new RegExp('top tube.......' + _this.state.top, 'gim');
-																top = f.text.match(trgx1) || f.text.match(trgx2);
-													}
+					var rear = !_this.state['rear-err'];
+					if (rear && _this.state.rear) {
+						var rrgx1 = new RegExp(_this.state.rear + 'mm', 'gim');
+						rear = f.text.match(rrgx1);
+					}
 
-													var yesnot = _this.state.logop === 'OR' ? yes || not : yes && not;
+					var top = !_this.state['top-err'];
+					if (top && _this.state.top) {
+						var trgx1 = new RegExp('top tube..?' + _this.state.top, 'gim');
+						var trgx2 = new RegExp('top tube.......' + _this.state.top, 'gim');
+						top = f.text.match(trgx1) || f.text.match(trgx2);
+					}
 
-													if (yesnot && seat && top) {
-																if (f === that.state.selected) {
-																			return _react2.default.createElement(
-																						'div',
-																						{ className: 'frame', key: f.url, onClick: that.unclickFrame(f) },
-																						_react2.default.createElement(
-																									'div',
-																									{ className: 'content' },
-																									_react2.default.createElement(
-																												'div',
-																												null,
-																												f.title
-																									),
-																									_react2.default.createElement('img', { src: that.state.selected && that.state.selected.img })
-																						),
-																						_react2.default.createElement(
-																									'a',
-																									{ href: f.url, target: '_blank' },
-																									'link'
-																						),
-																						_react2.default.createElement(
-																									'div',
-																									{ className: 'money' },
-																									f.money
-																						)
-																			);
-																} else {
+					var yesnot = _this.state.logop === 'OR' ? yes || not : yes && not;
 
-																			return _react2.default.createElement(
-																						'div',
-																						{ className: 'frame', key: f.url, onClick: that.clickFrame(f) },
-																						_react2.default.createElement(
-																									'div',
-																									{ className: 'content' },
-																									_react2.default.createElement(
-																												'div',
-																												null,
-																												f.title
-																									),
-																									_react2.default.createElement('img', { 'data-fsrc': f.img, className: 'fimg' })
-																						),
-																						_react2.default.createElement(
-																									'a',
-																									{ href: f.url, target: '_blank' },
-																									'link'
-																						),
-																						_react2.default.createElement(
-																									'div',
-																									{ className: 'money' },
-																									f.money
-																						)
-																			);
-																}
-													}
-										} catch (xxx) {
-													console.log('aa');
-										}
-										return null;
-							});
+					if (yesnot && seat && top && rear) {
+						if (f === that.state.selected) {
+							return _react2.default.createElement(
+								'div',
+								{ className: 'frame', key: f.url, onClick: that.unclickFrame(f) },
+								_react2.default.createElement(
+									'div',
+									{ className: 'content' },
+									_react2.default.createElement(
+										'div',
+										null,
+										f.title
+									),
+									_react2.default.createElement('img', { src: that.state.selected && that.state.selected.img })
+								),
+								_react2.default.createElement(
+									'a',
+									{ href: f.url, target: '_blank' },
+									'link'
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'money' },
+									f.money
+								)
+							);
+						} else {
 
 							return _react2.default.createElement(
+								'div',
+								{ className: 'frame', key: f.url, onClick: that.clickFrame(f) },
+								_react2.default.createElement(
+									'div',
+									{ className: 'content' },
+									_react2.default.createElement(
 										'div',
-										{ className: 'app' },
-										_react2.default.createElement(
-													'div',
-													{ className: 'filters' },
-													_react2.default.createElement(
-																'div',
-																{ className: 'filter' },
-																_react2.default.createElement(
-																			'div',
-																			null,
-																			'contains'
-																),
-																_react2.default.createElement('input', { value: this.state.yes, onChange: this.changeYes })
-													),
-													_react2.default.createElement(
-																'div',
-																{ className: 'logop', onClick: this.logop },
-																this.state.logop
-													),
-													_react2.default.createElement(
-																'div',
-																{ className: 'filter' },
-																_react2.default.createElement(
-																			'div',
-																			null,
-																			'does not contain'
-																),
-																_react2.default.createElement('input', { value: this.state.not, onChange: this.changeNot })
-													),
-													_react2.default.createElement(
-																'div',
-																{ className: 'filter' },
-																_react2.default.createElement(
-																			'div',
-																			null,
-																			'seat tube'
-																),
-																_react2.default.createElement('input', { value: this.state.seat, onChange: this.changeSeat })
-													),
-													_react2.default.createElement(
-																'div',
-																{ className: 'filter' },
-																_react2.default.createElement(
-																			'div',
-																			null,
-																			'top tube'
-																),
-																_react2.default.createElement('input', { value: this.state.top, onChange: this.changeTop })
-													),
-													_react2.default.createElement(
-																'div',
-																{ className: 'filter' },
-																_react2.default.createElement(
-																			'div',
-																			{ className: 'preset' },
-																			_react2.default.createElement(
-																						'a',
-																						{ onClick: function onClick() {
-																												return that.nav({ pathname: '/njs/', query: { logop: 'OR', yes: 'no dent', not: 'dent' } });
-																									} },
-																						'No Dent'
-																			)
-																),
-																_react2.default.createElement(
-																			'div',
-																			{ className: 'preset' },
-																			_react2.default.createElement(
-																						'a',
-																						{ onClick: function onClick() {
-																												return that.nav({ pathname: '/njs/', query: { logop: 'AND', seat: '', not: '', top: '', yes: 'aggressive' } });
-																									} },
-																						'Aggressive'
-																			)
-																),
-																_react2.default.createElement(
-																			'div',
-																			{ className: 'preset' },
-																			_react2.default.createElement(
-																						'a',
-																						{ onClick: function onClick() {
-																												return that.nav({ pathname: '/njs/', query: { logop: 'AND', seat: '', not: '', top: '', yes: 'funny' } });
-																									} },
-																						'Funny'
-																			)
-																),
-																_react2.default.createElement(
-																			'div',
-																			{ className: 'preset' },
-																			_react2.default.createElement(
-																						'a',
-																						{ onClick: function onClick() {
-																												return that.nav({ pathname: '/njs/', query: { seat: '5[3-5]' } });
-																									} },
-																						'seat 53-55'
-																			)
-																),
-																_react2.default.createElement(
-																			'div',
-																			{ className: 'preset' },
-																			_react2.default.createElement(
-																						'a',
-																						{ onClick: function onClick() {
-																												return that.nav({ pathname: '/njs/', query: { top: '5[3-5]' } });
-																									} },
-																						'top 53-55'
-																			)
-																)
-													)
-										),
-										_react2.default.createElement('input', { type: 'checkbox', id: 'nav-trigger', className: 'nav-trigger' }),
-										_react2.default.createElement(
-													'label',
-													{ htmlFor: 'nav-trigger' },
-													' '
-										),
-										_react2.default.createElement(
-													'div',
-													{ className: 'frames' },
-													_react2.default.createElement(
-																'div',
-																{ className: 'list' },
-																frames
-													)
-										)
+										null,
+										f.title
+									),
+									_react2.default.createElement('img', { 'data-fsrc': f.img, className: 'fimg' })
+								),
+								_react2.default.createElement(
+									'a',
+									{ href: f.url, target: '_blank' },
+									'link'
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'money' },
+									f.money
+								)
 							);
+						}
+					}
+				} catch (xxx) {
+					console.log('aa');
 				}
+				return null;
+			});
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'app' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'filters' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							null,
+							'contains'
+						),
+						_react2.default.createElement('input', { value: this.state.yes, onChange: this.changeYes })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'logop', onClick: this.logop },
+						this.state.logop
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							null,
+							'does not contain'
+						),
+						_react2.default.createElement('input', { value: this.state.not, onChange: this.changeNot })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							null,
+							'seat tube'
+						),
+						_react2.default.createElement('input', { value: this.state.seat, onChange: this.changeSeat })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							null,
+							'top tube'
+						),
+						_react2.default.createElement('input', { value: this.state.top, onChange: this.changeTop })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							null,
+							'rear space (mm)'
+						),
+						_react2.default.createElement('input', { value: this.state.rear, onChange: this.changeRear })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'filter' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { logop: 'OR', yes: 'no dent', not: 'dent' } });
+									} },
+								'No Dent'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { logop: 'AND', rear: '', seat: '', not: '', top: '', yes: 'aggressive' } });
+									} },
+								'Aggressive'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { logop: 'AND', rear: '', seat: '', not: '', top: '', yes: 'funny' } });
+									} },
+								'Funny'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { seat: '5[3-5]' } });
+									} },
+								'seat 53-55'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { top: '5[3-5]' } });
+									} },
+								'top 53-55'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'preset' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return that.nav({ pathname: '/njs/', query: { rear: '120' } });
+									} },
+								'rear 120mm'
+							)
+						)
+					)
+				),
+				_react2.default.createElement('input', { type: 'checkbox', id: 'nav-trigger', className: 'nav-trigger' }),
+				_react2.default.createElement(
+					'label',
+					{ htmlFor: 'nav-trigger' },
+					' '
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'frames' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'list' },
+						frames
+					)
+				)
+			);
+		}
 	});
 
 	(0, _reactDom.render)(_react2.default.createElement(
-				_reactRouter.Router,
-				{ history: _reactRouter.browserHistory },
-				_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
-				_react2.default.createElement(_reactRouter.Route, { path: '/njs/', component: App }),
-				_react2.default.createElement(_reactRouter.Route, { path: '/njs', component: App })
+		_reactRouter.Router,
+		{ history: _reactRouter.browserHistory },
+		_react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
+		_react2.default.createElement(_reactRouter.Route, { path: '/njs/', component: App }),
+		_react2.default.createElement(_reactRouter.Route, { path: '/njs', component: App })
 	), document.getElementById('content'));
 
 /***/ },
