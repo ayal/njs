@@ -44,8 +44,9 @@ var App = React.createClass({
 	var not = q.not || '';
 	var seat = q.seat || '';
 	var top = q.top || '';
+	var rear = q.rear || '';
 	
-        return {frames:[],regex:'',logop,top,seat,yes,not};
+        return {frames:[],regex:'',logop,top,seat,yes,not,rear};
     },
     componentWillUpdate: function(nps, ns) {
 	if (!_.isEqual(this.props.location.query,nps.location.query)) {    
@@ -54,10 +55,11 @@ var App = React.createClass({
 		var logop = gval(q.logop, ns.logop);
 		var yes = gval(q.yes, ns.yes);
 		var not = gval(q.not, ns.not);
-		var seat = gval(q.seat, ns.seat);
+	    var seat = gval(q.seat, ns.seat);
+	    var rear = gval(q.rear, ns.rear);
 		var top = gval(q.top, ns.top);
 		
-		this.setState({logop,top,seat,yes,not});
+	    this.setState({logop,top,seat,yes,not,rear});
 	    }
 	
     },
@@ -101,6 +103,9 @@ var App = React.createClass({
     },
     changeSeat:function(e){
 	this.setval('seat', e.target.value);
+    },
+    changeRear:function(e){
+	this.setval('rear', e.target.value);
     },
     changeTop:function(e){
 	this.setval('top', e.target.value);
@@ -171,6 +176,12 @@ var App = React.createClass({
 		    seat = f.text.match(srgx1) || f.text.match(srgx2);
 		}
 
+		var rear = !this.state['rear-err'];
+		if (rear && this.state.rear) {
+		    var rrgx1 = new RegExp(this.state.rear + 'mm','gim');
+		    rear = f.text.match(rrgx1)
+		}
+
 		var top = !this.state['top-err'];
 		if (top && this.state.top) {
 		    var trgx1 = new RegExp('top tube..?' + this.state.top,'gim');
@@ -180,7 +191,7 @@ var App = React.createClass({
 
 		var yesnot = this.state.logop === 'OR' ? yes || not : yes && not; 
 
-		if (yesnot && seat && top) {
+		if (yesnot && seat && top && rear) {
 		    if (f === that.state.selected) {
 			return (
 			    <div className="frame" key={f.url} onClick={that.unclickFrame(f)} >
@@ -255,17 +266,25 @@ var App = React.createClass({
 	    </div>
 
 	    <div className="filter">
+	    <div>
+	    rear space (mm)
+	    </div>
+	    <input value={this.state.rear} onChange={this.changeRear} />
+	    </div>
+
+
+	    <div className="filter">
 
 	    <div className="preset">
 	    <a onClick={()=>(that.nav({pathname: '/njs/',query:{logop:'OR', yes: 'no dent', not: 'dent'} }))} >No Dent</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.nav({pathname: '/njs/',query:{logop:'AND',seat:'',not:'',top:'', yes: 'aggressive'} }))} >Aggressive</a>
+		<a onClick={()=>(that.nav({pathname: '/njs/',query:{logop:'AND',rear:'',seat:'',not:'',top:'', yes: 'aggressive'} }))} >Aggressive</a>
 	    </div>
 
 	    <div className="preset">
-	    <a onClick={()=>(that.nav({pathname: '/njs/',query:{logop:'AND',seat:'',not:'',top:'',yes: 'funny'} }))} >Funny</a>
+		<a onClick={()=>(that.nav({pathname: '/njs/',query:{logop:'AND',rear:'',seat:'',not:'',top:'',yes: 'funny'} }))} >Funny</a>
 	    </div>
 
 	    <div className="preset">
