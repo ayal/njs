@@ -41,7 +41,10 @@ ebayframe_krol = function(url, cb) {
     console.log('e')
     request({url:url,timeout:timeout}, function(error, response, html){
 	var itemid = url.split('/')[5].split('?')[0];
-	request({url:'http://vi.vipr.ebaydesc.com/ws/eBayISAPI.dll?ViewItemDescV4&item=' + itemid ,timeout:timeout}, function(error1, response1, html1){
+	var eurl = 'http://vi.vipr.ebaydesc.com/ws/eBayISAPI.dll?ViewItemDescV4&item=' + itemid;
+
+	
+	request({url:eurl,timeout:timeout}, function(error1, response1, html1){
 	    if (error1) {
 		console.log('error getting desc', error1);
 		return;
@@ -55,10 +58,14 @@ ebayframe_krol = function(url, cb) {
 		var frames = [];
 		var text = $1('#mid_content').text()
 		var money = $('#prcIsum').text().replace('US ','');
+		if (!money) {
+		    money = $('#mm-saleDscPrc').text().replace('US ','');
+		}
+
 		var img = $1('#hw_images').find('img').attr('src');
 		var title = $('h1#itemTitle').text();
 		
-		
+		console.log('ebay money', money)
 		allframes.push({type:'njs', money: money, text:text, img: img, url:url, title});
 		writeframes();
 		
@@ -94,11 +101,6 @@ ebay_krol = function(term, page, cb) {
 		    return;
 		}
 		ebayframe_krol(link, function(t,m){
-		    if (t.match(term)) {
-			console.log('*******************')
-			console.log(link, m)
-			console.log('*******************')
-		    }
 		    doit(cursor + 1, frames);
 		})
 	    };
@@ -114,7 +116,7 @@ ebay_krol = function(term, page, cb) {
 }
 
 
-for (var p = 1; p < 4; p++) {
+for (var p = 1; p < 6; p++) {
     ebay_krol(/.seat.tube..C.T..5[3-5]([^]*?)no\sdent/gim,p,function(r){
 	//    console.log('res', r)
     })
@@ -164,11 +166,6 @@ njs_krol = function(term, page, cb) {
 		    return;
 		}
 		frame_krol(link, function(t,m){
-		    if (t.match(term)) {
-			console.log('*******************')
-			console.log(link, m)
-			console.log('*******************')
-		    }
 		    doit(cursor + 1, frames);
 		})
 	    };
@@ -188,7 +185,7 @@ njs_krol = function(term, page, cb) {
 //    console.log('res', r)
 })*/
 
-for (var p = 1; p < 6; p++) {
+for (var p = 1; p < 8; p++) {
     njs_krol(/.seat tube.5[3-5]([^]*?)(^(?!.*dent))/gim,p,function(r){
 	//    console.log('res', r)
     })
@@ -238,11 +235,6 @@ pilgrim_krol = function(term, page, cb) {
 		    return;
 		}
 		pilframe_krol(link, function(t,m){
-		    if (t.match(term)) {
-			console.log('*******************')
-			console.log(link, m)
-			console.log('*******************')
-		    }
 		    doit(cursor + 1, frames);
 		})
 	    };
@@ -267,7 +259,7 @@ pilgrim_krol = function(term, page, cb) {
 //    console.log('res', r)
 })*/
 
-for (var p = 1; p < 6; p++) {
+for (var p = 1; p < 8; p++) {
     pilgrim_krol(/.seat.tube..C.T..5[3-5]([^]*?)no\sdent/gim,p,function(r){
 	//    console.log('res', r)
     })
