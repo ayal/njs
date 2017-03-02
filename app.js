@@ -38,13 +38,25 @@ var writeframes = _.debounce(function(){
 
 
 ebayframe_krol = function(url, cb) {
-    console.log('e')
-    request({url:url,timeout:timeout}, function(error, response, html){
-	var itemid = url.split('/')[5].split('?')[0];
+  console.log('e')
+  request({url:url,
+	 headers: {
+	   'Accept': '*/*',
+	   'Content-Type': 'application/x-www-form-urlencoded',
+	   'User-Agent':'runscope/0.1'
+	 },
+    timeout:timeout}, function(error, response, html){
+      var itemid = url.split('/')[5].split('?')[0];
 	var eurl = 'http://vi.vipr.ebaydesc.com/ws/eBayISAPI.dll?ViewItemDescV4&item=' + itemid;
 
-	
-	request({url:eurl,timeout:timeout}, function(error1, response1, html1){
+      
+      request({url:eurl,
+	       headers: {
+		 'Accept': '*/*',
+		 'Content-Type': 'application/x-www-form-urlencoded',
+		 'User-Agent':'runscope/0.1'
+	       },
+	       timeout:timeout}, function(error1, response1, html1){
 	    if (error1) {
 		console.log('error getting desc', error1);
 		return;
@@ -81,7 +93,13 @@ ebayframe_krol = function(url, cb) {
 
 ebay_krol = function(term, page, cb) {
     var url = 'http://stores.ebay.com/8pilgrim8/Track-Bike-Frame-/_i.html?rt=nc&_fsub=1456842013&_sid=953818053&_trksid=p4634.c0.m14.l1581&_pgn=' + page;
-    request({url:url,timeout:timeout}, function(error, response, html){
+  request({url:url,
+	   headers: {
+	     'Accept': '*/*',
+	     'Content-Type': 'application/x-www-form-urlencoded',
+	     'User-Agent':'runscope/0.1'
+	   },
+	   timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
 
@@ -123,8 +141,14 @@ for (var p = 1; p < 6; p++) {
 }
 
 frame_krol = function(url, cb) {
-    console.log('.')
-    request({url:url,timeout:timeout}, function(error, response, html){
+  console.log('.')
+  request({url:url,
+	   headers: {
+	     'Accept': '*/*',
+	     'Content-Type': 'application/x-www-form-urlencoded',
+	     'User-Agent':'runscope/0.1'
+	   },
+	   timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
 	    var $ = cheerio.load(html);
@@ -145,9 +169,16 @@ frame_krol = function(url, cb) {
     });
 }
 
-njs_krol = function(term, page, cb) {
+
+var  njs_krol = function(term, page, cb) {
     var url = 'https://www.njs-export.com/collections/frames?page=' + page;
-    request({url:url,timeout:timeout}, function(error, response, html){
+  request({url:url,
+	   headers: {
+	     'Accept': '*/*',
+	     'Content-Type': 'application/x-www-form-urlencoded',
+	     'User-Agent':'runscope/0.1'
+	   },
+	   timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
 
@@ -181,10 +212,6 @@ njs_krol = function(term, page, cb) {
     });
 }
 
-/*njs_krol(/.seat tube.5[4-6]([^]*?)top tube.5[2-3]/gim,null,function(r){
-//    console.log('res', r)
-})*/
-
 for (var p = 1; p < 8; p++) {
     njs_krol(/.seat tube.5[3-5]([^]*?)(^(?!.*dent))/gim,p,function(r){
 	//    console.log('res', r)
@@ -193,8 +220,14 @@ for (var p = 1; p < 8; p++) {
 
 
 pilframe_krol = function(url, cb) {
-    console.log('.')
-    request({url:url,timeout:timeout}, function(error, response, html){
+  console.log('.')
+  request({url:url,
+	   headers: {
+	     'Accept': '*/*',
+	     'Content-Type': 'application/x-www-form-urlencoded',
+	     'User-Agent':'runscope/0.1'
+	   },
+	   timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
 	    var $ = cheerio.load(html);
@@ -216,7 +249,13 @@ pilframe_krol = function(url, cb) {
 
 pilgrim_krol = function(term, page, cb) {
     var url = 'http://www.8pilgrim8.com/products/track-bike-frame?page=' + page;
-    request({url:url,timeout:timeout}, function(error, response, html){
+  request({url:url,
+	   headers: {
+	     'Accept': '*/*',
+	     'Content-Type': 'application/x-www-form-urlencoded',
+	     'User-Agent':'runscope/0.1'
+	   },
+	   timeout:timeout}, function(error, response, html){
         if(!error) {
             var data = {};
             console.time('njs_find');
