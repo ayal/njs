@@ -154,7 +154,7 @@ frame_krol = function(url, cb) {
 	    var $ = cheerio.load(html);
             var frames = [];
             var text = $('.description').text()
-	    var money = $('.money').text()
+	    var money = $('.price .money').first().text()
 	    var img = $('#product-gallery').find('img').attr('src');
 	    var title = $('#product-header-title h1').text();
 	    allframes.push({type:'njs', money: money, text:text, img: img, url:url, title});
@@ -298,11 +298,13 @@ pilgrim_krol = function(term, page, cb) {
 //    console.log('res', r)
 })*/
 
-for (var p = 1; p < 8; p++) {
-    pilgrim_krol(/.seat.tube..C.T..5[3-5]([^]*?)no\sdent/gim,p,function(r){
-	//    console.log('res', r)
-    })
-}
+/*
+   for (var p = 1; p < 8; p++) {
+   pilgrim_krol(/.seat.tube..C.T..5[3-5]([^]*?)no\sdent/gim,p,function(r){
+   //    console.log('res', r)
+   })
+   }
+*/
 
 
 var njs = [

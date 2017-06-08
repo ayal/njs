@@ -194,15 +194,15 @@ var App = React.createClass({
 		if (yesnot && seat && top && rear) {
 		    if (f === that.state.selected) {
 			return (
-			    <div className="frame" key={f.url} onClick={that.unclickFrame(f)} >
-			    <div className="content">
-			    <div>{f.title}</div>
-			    <img src={that.state.selected && that.state.selected.img} />
-			    </div>
-				
-			    <a href={f.url} target="_blank">link</a>
-			    <div className="money">{f.money}</div>
-			    </div>
+			  <div className="frame" key={f.url} onClick={that.unclickFrame(f)} >
+			    <a href={f.url} target="_blank">
+			      <div className="content">
+				<div>{f.title}</div>
+				<img src={that.state.selected && that.state.selected.img} />
+			      </div>
+			      <div className="money">{f.money}</div>
+			    </a>
+			  </div>
 			)
 		    }
 		    else {
@@ -292,7 +292,7 @@ var App = React.createClass({
 	    </div>
 
 	    	<div className="preset">
-		<a onClick={()=>(that.nav({pathname: '/njs/',query:{top: '5[3-5]'} }))} >top 53-55</a>
+		<a onClick={()=>(that.nav({pathname: '/njs/',query:{top: '5[4-5]'} }))} >top 54-55</a>
 		</div>
 
 	    	<div className="preset">
